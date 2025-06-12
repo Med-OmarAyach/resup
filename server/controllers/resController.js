@@ -22,7 +22,9 @@ const createReservation = async (req, res) => {
     if (overlapping) {
       return res.status(400).json({ message: "Table already reserved for that time" });
     }
-
+    if (guests > table.capacity) {
+      return res.status(400).json({ message: "Number of guests exceeds table capacity" });
+    }
     // 3. Create the reservation
     const newReservation = new Reservation({
       userid,
@@ -40,4 +42,19 @@ const createReservation = async (req, res) => {
     res.status(500).json({ message: "Internal server error" });
   }
 };
-module.exports = { createReservation };
+const getReservations = async (req, res) => {
+  const userid = req.user._id;
+
+  try {
+    // Fetch reservations for the user
+    const reservations = await Reservation.find({ userid })
+      .populate('tableid', 'name capacity') // Populate table details
+      
+
+    res.status(200).json(reservations);
+  } catch (error) {
+    console.error("Error fetching reservations:", error);
+    res.status(500).json({ message: "Internal server error" });
+  }
+}
+module.exports = { createReservation, getReservations, updateReservation, deleteReservation };

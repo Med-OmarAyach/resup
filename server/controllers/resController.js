@@ -57,4 +57,4 @@ const getReservations = async (req, res) => {
     res.status(500).json({ message: "Internal server error" });
   }
 }
-module.exports = { createReservation, getReservations, updateReservation, deleteReservation };
+module.exports = { createReservation, getReservations}; //updateReservation, deleteReservation };

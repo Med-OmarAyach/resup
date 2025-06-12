@@ -6,7 +6,7 @@ const {createReservation, getReservations, updateReservation, deleteReservation}
 // Define routes for reservations
 router.post('/', authMiddleware, createReservation);
 router.get('/', authMiddleware, getReservations);
-router.put('/:id', authMiddleware, updateReservation);
-router.delete('/:id', authMiddleware, deleteReservation);
+//router.put('/:id', authMiddleware, updateReservation);
+//router.delete('/:id', authMiddleware, deleteReservation);
 module.exports = router; // Export the router to use in the main server file
 // This code defines routes for managing reservations in an Express application.

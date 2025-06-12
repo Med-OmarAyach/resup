@@ -20,8 +20,8 @@ app.get('/', (req, res) => {
   res.send('API is running...');
 });
 //import routes
-const userRoutes = require('./routes/userRoutes');
-const reservationRoutes = require('./routes/reservationRoutes');
+const userRoutes = require('./routes/userRoute');
+const reservationRoutes = require('./routes/reservationRoute');
 // Use routes
 app.use('/api/users', userRoutes);
 app.use('/api/reservations', reservationRoutes);

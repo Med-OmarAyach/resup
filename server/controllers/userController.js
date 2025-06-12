@@ -2,11 +2,7 @@ const User = require('../models/User');
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 
-const token = jwt.sign(
-  { userId: user._id, username: user.username }, // payload
-  process.env.JWT_SECRET,                         // secret
-  { expiresIn: process.env.JWT_EXPIRES_IN }      // options
-);
+
 
 const createUser = async (req, res) => {
     
@@ -32,11 +28,15 @@ const createUser = async (req, res) => {
 
 
 
-module.exports = { createUser };
 const loginUser = async (req, res) => {
     try {
         const { name, password } = req.body;
         const user = await User.findOne({ username: name });
+        const token = jwt.sign(
+  { userId: user._id, username: user.username }, // payload
+  process.env.JWT_SECRET,                         // secret
+  { expiresIn: process.env.JWT_EXPIRES_IN }      // options
+);
         if (!user) {
             return res.status(400).json({ message: "Invalid username or password" });
         }
@@ -51,4 +51,4 @@ const loginUser = async (req, res) => {
         res.status(500).json({ message: "Internal server error" });
     }
 };
-module.exports = {loginUser };
+module.exports = {loginUser,createUser };

@@ -19,7 +19,12 @@ app.use(express.json());
 app.get('/', (req, res) => {
   res.send('API is running...');
 });
-
+//import routes
+const userRoutes = require('./routes/userRoutes');
+const reservationRoutes = require('./routes/reservationRoutes');
+// Use routes
+app.use('/api/users', userRoutes);
+app.use('/api/reservations', reservationRoutes);
 // Connect to MongoDB
 mongoose
   .connect(process.env.MONGO_URI)

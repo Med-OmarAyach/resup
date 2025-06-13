@@ -7,14 +7,16 @@ const jwt = require('jsonwebtoken');
 const createUser = async (req, res) => {
     
     try {
-        const { name, email, password } = req.body;
-        const existingUser = await User.findOne({ username: name });
+        console.log("[createUser] req.body =", req.body);
+
+        const { username, email, password } = req.body;
+        const existingUser = await User.findOne({ username: username });
         if (existingUser) {
             return res.status(400).json({ message: "Username already exists" });
         }
         const hashedPassword = await bcrypt.hash(password, 10);
         const newUser = new User({
-            username: name,
+            username: username,
             email: email,
             password: hashedPassword,
         });
@@ -30,8 +32,8 @@ const createUser = async (req, res) => {
 
 const loginUser = async (req, res) => {
     try {
-        const { name, password } = req.body;
-        const user = await User.findOne({ username: name });
+        const {username, password } = req.body;
+        const user = await User.findOne({ username:username });
         const token = jwt.sign(
   { userId: user._id, username: user.username }, // payload
   process.env.JWT_SECRET,                         // secret
